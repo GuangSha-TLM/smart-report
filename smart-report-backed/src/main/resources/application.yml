@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    hikari:
+      max-lifetime: 60000  # 设置连接最大生命周期为 60 秒
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # set @@GLOBAL.sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+    url: jdbc:mysql://192.168.0.211:3306/smart-report
+    username: smart-report
+    password: zT2ktm5bL2X6EZ8M
+  servlet:
+    multipart:
+      max-file-size: 10000MB
+      max-request-size: 100000MB
+server:
+  port: 8098
+
+knife4j:
+  enable: true
+  production: false
+
+# 选择api项目下的resouces路径下的user文件夹
+# filePath: "/Users/yangyida/Documents/project/complaint_system/web-server/src/main/resources/img/user/"
+filePath: "D:/Desktop/System/history/Community/Community-system/core/src/main/resources/img/user/"
+#D:\Desktop\System\history\Community\Community-system\core\src\main\resources
+# 服务器url路径
+projecturl: "http://127.0.0.1:8098"
+
+
