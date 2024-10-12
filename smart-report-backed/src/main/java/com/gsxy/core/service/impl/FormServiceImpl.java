@@ -41,9 +41,8 @@ public class FormServiceImpl implements FormService {
     public ResponseVo add(FormAddBo formAddBo) {
 
         //获取当前登录用户id
-//        Long userId = LoginUtils.getLoginUserId();
-        // todo 临时使用999作为userid
-        Long userId = 999l;
+        Long userId = LoginUtils.getLoginUserId();
+
 
         Form form = Form.builder()
                 .config(formAddBo.getConfig())
@@ -101,6 +100,11 @@ public class FormServiceImpl implements FormService {
                 .build();
     }
 
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
     @Override
     public ResponseVo delete(Long id) {
         //逻辑删除
@@ -165,9 +169,7 @@ public class FormServiceImpl implements FormService {
         List<Form> list = formMapper.page(
                 FormPageSBo.builder()
                         .index(index)
-//                        .userId(LoginUtils.getLoginUserId())
-                        // todo 临时使用999作为userid
-                        .userId(999l)
+                        .userId(LoginUtils.getLoginUserId())
                         .pageSize(formPageBo.getPageSize())
                         .build()
 
@@ -202,9 +204,7 @@ public class FormServiceImpl implements FormService {
         List<Form> list = formMapper.selectAll(
                 FormPageSBo.builder()
                         .index(index)
-//                        .userId(LoginUtils.getLoginUserId())
-                        // todo 临时使用999作为userid
-                        .userId(999l)
+                        .userId(LoginUtils.getLoginUserId())
                         .pageSize(formPageBo.getPageSize())
                         .build()
 
