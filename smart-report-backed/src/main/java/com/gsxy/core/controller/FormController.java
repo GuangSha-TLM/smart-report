@@ -82,7 +82,7 @@ public class FormController {
             );
         }
 
-        return JSON.toJSONString(formService.delete(id));
+        return JSONArray.toJSONString(formService.delete(id));
     }
 
     /**
@@ -106,7 +106,7 @@ public class FormController {
             );
         }
 
-        return JSON.toJSONString(formService.update(formUpdateBo));
+        return JSONArray.toJSONString(formService.update(formUpdateBo));
     }
 
     /**
@@ -129,7 +129,7 @@ public class FormController {
             );
         }
 
-        return JSON.toJSONString(formService.page(formPageBo));
+        return JSONArray.toJSONString(formService.page(formPageBo));
     }
 
     /**
@@ -152,7 +152,7 @@ public class FormController {
             );
         }
 
-        return JSON.toJSONString(formService.selectAll(formPageBo));
+        return JSONArray.toJSONString(formService.selectAll(formPageBo));
     }
 
 }
