@@ -11,12 +11,9 @@ spring:
     multipart:
       max-file-size: 10000MB
       max-request-size: 100000MB
+
 server:
   port: 8098
-
-knife4j:
-  enable: true
-  production: false
 
 # 选择api项目下的resouces路径下的user文件夹
 # filePath: "/Users/yangyida/Documents/project/complaint_system/web-server/src/main/resources/img/user/"

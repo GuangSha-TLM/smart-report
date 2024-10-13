@@ -35,16 +35,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthorizationInterceptor())
                 .addPathPatterns("/**")// 指定拦截的路径
-                .excludePathPatterns("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**", "/v3/api-docs/**","/doc.html#/**", "/doc.html/**","/v2/api-docs/**","/v2/**","/chromewebdata/**");
+                .excludePathPatterns("/admin/modeler/**","/diagram-viewer/**","/editor-app/**","/*.html",
+                 "/admin/processImage/**",
+                 "/admin/wechat/authorize","/admin/wechat/userInfo","/admin/wechat/bindPhone",
+                 "/favicon.ico","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**", "/doc.html");
     }
 
-//  1  @Override
-//  1  public void addCorsMappings(CorsRegistry registry) {
-//   1     registry.addMapping("/**")
-//   1             .allowedOrigins("*")  // 或指定具体的前端地址
-//   1             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//   1             .allowedHeaders("*")
-//    1            .exposedHeaders("Content-disposition");  // 确保暴露 Content-Disposition
-//   1 }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")  // 或指定具体的前端地址
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("*")
+//                .exposedHeaders("Content-disposition");  // 确保暴露 Content-Disposition
+//    }
 
 }

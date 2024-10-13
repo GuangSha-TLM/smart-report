@@ -68,8 +68,8 @@ public class UserController {
                             .build()
             );
         }
-        ResponseVo responseVo = userService.userLogin(userLoginBo);
-        return JSONArray.toJSONString(responseVo);
+//        ResponseVo responseVo = userService.userLogin(userLoginBo);
+        return JSONArray.toJSONString(userService.userLogin(userLoginBo));
     }
 
     /**
