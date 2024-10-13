@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsxy.core.mapper.UserMapper">
+
+    <select id="selectAll" resultType="com.gsxy.core.pojo.vo.UserVo">
+        select
+            id,username,password,role,created_time,updated_by,updated_time
+        from
+            user
+        where
+            del_flag=0
+    </select>
+
+    <update id="Update">
+        update  user
+            <set>
+                <if test="passwd!=null and passwd!='' ">
+                         password=#{passwd},
+                </if>
+                <if test="role!=null and role!='' ">
+                         role=#{role},
+                </if>
+                <if test="updatedBy!=null and updatedBy!='' ">
+                    updated_by=#{updatedBy},
+                </if>
+                <if test="delFlag!=null and delFlag!='' ">
+                    del_flag=#{delFlag},
+                </if>
+                <if test="updatedTime!=null  ">
+                    updated_time=#{updatedTime},
+                </if>
+            </set>
+
+
+        where id=#{id}
+    </update>
+
+    <select id="selectPageQuery" resultType="com.gsxy.core.pojo.vo.UserVo">
+        select
+            id,username,password,role,created_time,updated_by,updated_time
+        from
+            user
+
+        limit #{page},#{pageSize}
+    </select>
+</mapper>

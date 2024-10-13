@@ -29,17 +29,17 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        // 在请求处理之前设置响应的字符集为 UTF-8
-//        System.out.println("开始");
-//        System.err.println(response.getCharacterEncoding());
+        //1 在请求处理之前设置响应的字符集为 UTF-8
+//       1 System.out.println("开始");
+//       1 System.err.println(response.getCharacterEncoding());
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/plain;charset=UTF-8");
-//        System.err.println(response.getCharacterEncoding()+"？？？");
+//     1   System.err.println(response.getCharacterEncoding()+"？？？");
 //
 //
-//        System.err.println("hello");
+//      1  System.err.println("hello");
         StringBuffer requestURL = request.getRequestURL();
-//        System.err.println(requestURL);
+//      1  System.err.println(requestURL);
 
         //白名单
         if (

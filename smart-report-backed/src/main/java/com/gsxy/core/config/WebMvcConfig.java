@@ -38,13 +38,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**", "/v3/api-docs/**","/doc.html#/**", "/doc.html/**","/v2/api-docs/**","/v2/**","/chromewebdata/**");
     }
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("*")  // 或指定具体的前端地址
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("*")
-//                .exposedHeaders("Content-disposition");  // 确保暴露 Content-Disposition
-//    }
+//  1  @Override
+//  1  public void addCorsMappings(CorsRegistry registry) {
+//   1     registry.addMapping("/**")
+//   1             .allowedOrigins("*")  // 或指定具体的前端地址
+//   1             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//   1             .allowedHeaders("*")
+//    1            .exposedHeaders("Content-disposition");  // 确保暴露 Content-Disposition
+//   1 }
 
 }

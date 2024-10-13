@@ -1,9 +1,11 @@
 package com.gsxy.core.pojo.bo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,8 @@ public class UserRegBo implements Serializable {
     private String username;
     @ApiModelProperty(value = "密码", example = "密码")
     private String passwd;
+    //创建时间
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createdTime;
 
 }
