@@ -40,9 +40,11 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
 
-        userRegBo.setCreatedTime(new Date());
-
-        userMapper.insert(userRegBo);
+        userMapper.insert(User.builder()
+                        .password(userRegBo.getPassword())
+                        .username(userRegBo.getUsername())
+                        .createdTime(new Date())
+                        .build());
 
         return ResponseVo.builder()
                 .code(CodeValues.SUCCESS_CODE)
