@@ -19,9 +19,11 @@ public class UserUpdateBo {
     private Long role;
 
     // 修改人
-    private long updatedBy;
+    private Long updatedBy;
+
     // 修改时间
     private Date updatedTime;
+
     //逻辑删除
     private int delFlag;
 

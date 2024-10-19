@@ -131,10 +131,15 @@ public class UserServiceImpl implements UserService {
                     .message("用户权限仅有0,1,2")
                     .build();
         }
-
+        UserVo userVo = userMapper.selectById(userUpdateBo.getId());
+        if (userVo==null){
+            return ResponseVo.builder()
+                    .code(CodeValues.SUCCESS_CODE)
+                    .message("用户不存在")
+                    .build();
+        }
         if (userUpdateBo.getPasswd()!=null && !"".equals(userUpdateBo.getPasswd())){
             //校验密码是否为原密码
-            UserVo userVo = userMapper.selectById(userUpdateBo.getId());
             if (userUpdateBo.getPasswd().equals(userVo.getPassword())) {
                 return ResponseVo.builder()
                         .code(CodeValues.SUCCESS_CODE)
@@ -144,7 +149,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        userUpdateBo.setUpdatedTime(new Date());
+//        userUpdateBo.setUpdatedTime(new Date());
         userMapper.Update(userUpdateBo);
 
         return ResponseVo.builder()
