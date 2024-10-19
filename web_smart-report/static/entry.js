@@ -1,7 +1,7 @@
 // 接口地址
 const MainUrl = "http://127.0.0.1";
-const MainPort = 8001;
-const Developer = "asd"
+const MainPort = 8098;
+const Developer = "asd";
 const TechnicalSupport = "asdas";
 
 const user = {
@@ -13,11 +13,14 @@ const user = {
   password: "***",
   idCard: "",
   collegeId: 0,
-  majorId:  0,
+  majorId: 0,
   classId: 0,
   role: 0,
   grade: 0,
-}
+};
 export default {
-  MainUrl,MainPort,Developer,TechnicalSupport
+  MainUrl,
+  MainPort,
+  Developer,
+  TechnicalSupport,
 };

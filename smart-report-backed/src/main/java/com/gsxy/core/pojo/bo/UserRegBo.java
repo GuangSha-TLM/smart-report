@@ -17,9 +17,8 @@ public class UserRegBo implements Serializable {
     @ApiModelProperty(value = "用户名", example = "用户名")
     private String username;
     @ApiModelProperty(value = "密码", example = "密码")
-    private String passwd;
-    //创建时间
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdTime;
+    private String password;
+    @ApiModelProperty(value = "密码", example = "密码")
+    private String againPassword;
 
 }
