@@ -18,8 +18,8 @@ public interface UserMapper {
     @Select("select * from user where username=#{username}")
     User selectByUsername(String username);
 
-    @Insert("insert into user(username,password,created_time) values (#{username},#{passwd},#{createdTime})")
-    void insert(UserRegBo userRegBo);
+    @Insert("insert into user(username,password,created_time) values (#{username},#{password},#{createdTime})")
+    void insert(User user);
 
     @Select("select * from user where id=#{id} and del_flag=0")
     UserVo selectById(Long id);
