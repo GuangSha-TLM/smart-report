@@ -5,7 +5,7 @@
                 <el-row class="tac">
                     <el-col :span="23">
                         <h5>智能报表导航</h5>
-                        <el-menu router="true" default-active="1" class="el-menu-vertical-demo">
+                        <el-menu default-active="1" class="el-menu-vertical-demo">
                             <el-submenu index="1">
                                 <template slot="title">
                                     <i class="el-icon-location"></i>

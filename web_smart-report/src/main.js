@@ -5,6 +5,13 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui'
+import axios from 'axios';
+//配置跨域前置
+// axios.defaults.baseURL = '/api' // 开发本地代理
+// axios.defaults.headers.post['Contenst-Type'] = 'application/json;'
+// axios.defaults.headers.common['token'] = store.state.token
+// 全局配axios
+Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 

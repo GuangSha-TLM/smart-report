@@ -20,8 +20,8 @@
                         <div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Account number</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
+                                <input v-model="userRegister.username" type="email" class="form-control"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your account
                                     information with anyone
                                     else.</small>
@@ -30,17 +30,16 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Enter Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
-                                    v-model="user.password">
+                                    v-model="userRegister.passwd">
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="exampleInputPassword1">Enter Password again</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
                                     v-model="user.againPassword">
-                            </div>
+                            </div> -->
 
-                            <button class="btn btn-primary" style="width:100%" @click="submit()"
-                                :disabled="switchbutton">Submit</button>
+                            <button class="btn btn-primary" style="width:100%" @click="submit()">Submit</button>
 
                         </div>
                     </div>
@@ -54,11 +53,12 @@
         </footer>
     </div>
 </template>
-  
+
 <script>
 import Foot from '../frame/Foot.vue';
 import Top from '../frame/LoginTop.vue';
-import { synRequestPost, synRequestGet } from "../../../../static/request"
+//引入api的接口文件
+import { userRegister } from "@/api/userinfo";
 
 export default {
     name: 'Register',
@@ -67,14 +67,10 @@ export default {
     },
     data() {
         return {
-            user: {
+            userRegister: {
                 username: "",
-                password: "",
-                againPassword: "",
+                passwd: "",
             },
-            input: "",
-            //按钮开关
-            switchbutton: false,
         }
     },
     mounted() {
@@ -84,27 +80,29 @@ export default {
     methods: {
         //提交登入
         async submit() {
-            this.switchbutton = true;
+            // this.switchbutton = true;
             //密码的重复输入正确判断
-            if (this.user.password !== this.user.againPassword) {
-                alert('密码设置失败');
-                return;
-            }
+            // if (this.userRegister.password !== this.user.againPassword) {
+            //     alert('密码设置失败');
+            //     return;
+            // }
 
-            let obj = await synRequestPost("/user/userReg", this.user);
-            alert(obj.data);
+            let obj = await userRegister("/user/userReg", this.userRegister);
             if (obj.code == '0x200') {
-                this.$router.push("/user/login");
+                console.log(obj, 'data');
+                // this.$router.push("/user/login");
             }
-
-
-            this.switchbutton = false;
         },
+        // submit() {
+        //     this.$axios.post('/user/userReg', this.userRegister).then(res => {
+        //         console.log(res);
+        //     })
+        // }
     }
 }
 </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
 h2 {
@@ -125,4 +123,3 @@ a {
     color: #42b983;
 }
 </style>
-  
