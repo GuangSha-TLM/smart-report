@@ -5,13 +5,13 @@
                 <el-row class="tac">
                     <el-col :span="23">
                         <h5>智能报表导航</h5>
-                        <el-menu default-active="1" class="el-menu-vertical-demo">
+                        <el-menu router="true" default-active="1" class="el-menu-vertical-demo">
                             <el-submenu index="1">
                                 <template slot="title">
                                     <i class="el-icon-location"></i>
                                     <span>表单板块</span>
                                 </template>
-                                <el-menu-item index="1-1">选项1</el-menu-item>
+                                <el-menu-item index="/form">选项1</el-menu-item>
                                 <el-menu-item index="1-2">选项2</el-menu-item>
                             </el-submenu>
                             <el-menu-item index="/userinfo">
@@ -39,7 +39,7 @@ export default {
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 500px;
+    height: 850px;
     /* background-color: aqua; */
 
     .Left_content {
@@ -48,7 +48,7 @@ export default {
     }
 
     .Rright_content {
-        width: 50%;
+        width: 80%;
         /* background-color: yellow; */
     }
 

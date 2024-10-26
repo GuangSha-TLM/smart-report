@@ -6,6 +6,15 @@ import router from './router'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui'
 import axios from 'axios';
+// 使用form-create的组件
+import FcDesigner from '@form-create/designer';
+import ELEMENT from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// 使用 Element UI
+Vue.use(ELEMENT);
+// 使用 form-create 和 designer
+Vue.use(FcDesigner);
+Vue.use(FcDesigner.formCreate);
 //配置跨域前置
 // axios.defaults.baseURL = '/api' // 开发本地代理
 // axios.defaults.headers.post['Contenst-Type'] = 'application/json;'

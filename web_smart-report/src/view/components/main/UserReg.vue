@@ -87,7 +87,7 @@ export default {
             //     return;
             // }
 
-            let obj = await userRegister("/user/userReg", this.userRegister);
+            let obj = await userRegister("user/userReg", this.userRegister);
             if (obj.code == '0x200') {
                 console.log(obj, 'data');
                 // this.$router.push("/user/login");

@@ -1,6 +1,6 @@
 {
   "name": "bryan-yang",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "A Vue.js project",
   "author": "哇塞大嘴好帥 <66861267+DaZuiZui@users.noreply.github.com>",
   "private": true,
@@ -10,12 +10,17 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@form-create/designer": "^1.1.5",
+    "@form-create/element-ui": "^2.5.37",
     "axios": "^1.5.0",
     "element-ui": "^2.15.14",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -45,9 +50,6 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
-    "@vue/cli-service": "~5.0.0",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
