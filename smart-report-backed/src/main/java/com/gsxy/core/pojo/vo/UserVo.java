@@ -21,7 +21,7 @@ public class UserVo {
     //创建时间
     private Date createdTime;
     // 修改人
-    private Date updatedBy;
+    private Long updatedBy;
     // 修改时间
     private Date updatedTime;
 

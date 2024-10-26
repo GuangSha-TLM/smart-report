@@ -22,15 +22,13 @@
                 <if test="role!=null and role!='' ">
                          role=#{role},
                 </if>
-                <if test="updatedBy!=null and updatedBy!='' ">
+                <if test="updatedBy!=null  ">
                     updated_by=#{updatedBy},
                 </if>
                 <if test="delFlag!=null and delFlag!='' ">
                     del_flag=#{delFlag},
                 </if>
-                <if test="updatedTime!=null  ">
-                    updated_time=#{updatedTime},
-                </if>
+
             </set>
 
 
