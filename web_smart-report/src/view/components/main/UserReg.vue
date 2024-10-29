@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Enter Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
-                                    v-model="userRegisterData.passwd">
+                                    v-model="userRegisterData.password">
                             </div>
 
                             <!-- <div class="form-group">
@@ -69,7 +69,7 @@ export default {
         return {
             userRegisterData: {
                 username: "",
-                passwd: "",
+                password: "",
             },
         }
     },
@@ -94,7 +94,7 @@ export default {
         //     }
         // },
         submit() {
-            this.$axios.post('/api/user/userReg', this.userRegister).then(res => {
+            this.$axios.post('/api/user/userReg', this.userRegisterData).then(res => {
                 console.log(res);
             })
         }
