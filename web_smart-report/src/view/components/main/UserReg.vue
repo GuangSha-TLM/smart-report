@@ -20,7 +20,7 @@
                         <div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Account number</label>
-                                <input v-model="userRegister.username" type="email" class="form-control"
+                                <input v-model="userRegisterData.username" type="email" class="form-control"
                                     id="exampleInputEmail1" aria-describedby="emailHelp">
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your account
                                     information with anyone
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Enter Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
-                                    v-model="userRegister.passwd">
+                                    v-model="userRegisterData.passwd">
                             </div>
 
                             <!-- <div class="form-group">
@@ -67,7 +67,7 @@ export default {
     },
     data() {
         return {
-            userRegister: {
+            userRegisterData: {
                 username: "",
                 passwd: "",
             },
@@ -79,25 +79,25 @@ export default {
 
     methods: {
         //提交登入
-        async submit() {
-            // this.switchbutton = true;
-            //密码的重复输入正确判断
-            // if (this.userRegister.password !== this.user.againPassword) {
-            //     alert('密码设置失败');
-            //     return;
-            // }
+        // async submit() {
+        //     // this.switchbutton = true;
+        //     //密码的重复输入正确判断
+        //     // if (this.userRegister.password !== this.user.againPassword) {
+        //     //     alert('密码设置失败');
+        //     //     return;
+        //     // }
 
-            let obj = await userRegister("user/userReg", this.userRegister);
-            if (obj.code == '0x200') {
-                console.log(obj, 'data');
-                // this.$router.push("/user/login");
-            }
-        },
-        // submit() {
-        //     this.$axios.post('/user/userReg', this.userRegister).then(res => {
-        //         console.log(res);
-        //     })
-        // }
+        //     let obj = await userRegister("user/userReg", this.userRegisterData);
+        //     if (obj.code == '0x200') {
+        //         console.log(obj, 'data');
+        //         // this.$router.push("/user/login");
+        //     }
+        // },
+        submit() {
+            this.$axios.post('/api/user/userReg', this.userRegister).then(res => {
+                console.log(res);
+            })
+        }
     }
 }
 </script>

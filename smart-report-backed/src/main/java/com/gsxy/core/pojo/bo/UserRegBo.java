@@ -18,7 +18,7 @@ public class UserRegBo implements Serializable {
     private String username;
     @ApiModelProperty(value = "密码", example = "密码")
     private String password;
-    @ApiModelProperty(value = "密码", example = "密码")
-    private String againPassword;
+//    @ApiModelProperty(value = "密码", example = "密码")
+//    private String againPassword;
 
 }
