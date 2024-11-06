@@ -12,6 +12,9 @@
     </div>
 </template>
 <script>
+//引入api的接口文件
+import { formCreate } from "@/api/form";
+
 export default {
     name: 'Form',
     data() {
@@ -24,6 +27,9 @@ export default {
             rule: [],
             //表单数据，
             value: {},
+            FormAddBo: {
+                config: ''
+            },
             //组件的参数配置
             option: {
                 //表单的提交事件
@@ -42,10 +48,16 @@ export default {
             return this.rule
         },
         outForm() {
-            this.hiddent = false,
-                this.rule = JSON.parse(this.$refs.designer.getJson())
-            console.log(this.$refs.designer.getJson());
+            this.hiddent = false
+            this.rule = JSON.parse(this.$refs.designer.getJson()) //表单实现数据 -> 后端接口
+            // console.log(this.$refs.designer.getJson());
+            this.FormAddBo.config = this.rule;
+            const res = formCreate(this.FormAddBo);
+            console.log('res = ', res);
+            
+            // if () { 
 
+            // }
         }
     },
     mounted() {
