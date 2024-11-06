@@ -1,14 +1,14 @@
 //è®¾ç½®cookie
-function setCookie(name, value) {
+export function setCookie(name, value) {
     if (value) {
         var Days = 365
         var exp = new Date()
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
-        document.cookie = name + '=' + escape(value) + ';expires=' + exp.toGMTString() + "; path=/";
+        document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + exp.toGMTString() + "; path=/";
     }
 }
 //èŽ·å–cookie
-function getCookie(NameOfCookie) {
+export function getCookie(NameOfCookie) {
     if (document.cookie.length > 0) {
         // 查找指定的 Cookie 名称加上等号
         begin = document.cookie.indexOf(NameOfCookie + "=");

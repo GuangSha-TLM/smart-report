@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Password</label>
-                                  <input type="password" class="form-control" id="exampleInputPassword1" v-model="userLoginBo.password">
+                                  <input type="password" class="form-control" id="exampleInputPassword1" v-model="userLoginBo.passwd">
                                 </div>
                                 <div class="form-group form-check">
                                       
@@ -49,7 +49,10 @@
   import Foot from '../frame/Foot.vue';
   import Top  from '../frame/LoginTop.vue'
   import {synRequestPost,synRequestGet} from "../../../../static/request"
- 
+  import { login } from "@/api/user";
+  import { setCookie } from "../../../../static/ZuiBlog/ZuiBlog";
+
+  
   export default {
     name: 'HelloWorld',
     components: {
@@ -59,7 +62,7 @@
       return {
         userLoginBo: {
             username: "",
-            password: "",
+            passwd: "",
         },
         //按钮开关
         switchbutton: false,
@@ -72,19 +75,28 @@
   methods: {
     //提交登入
     async submit(){
-         this.switchbutton = true;
-         var object = await synRequestPost("/user/userlogin",this.userLoginBo);
-    
-         if(object.code != "0x200"){
-            alert(object.message);
-            this.switchbutton = false;
-            return ;
-         }
-
-         setCookie ("token",object.data);
-         alert(object.message);
-         this.$router.push("/TaskList");
-         this.switchbutton = false;
+      this.switchbutton = true;
+         const object = login(this.userLoginBo)
+         .then((obj) => {
+              if (obj && obj.code === "0x200") {
+                  console.log("登录成功", obj.data);
+                  setCookie ("token",obj.data);
+                  alert(obj.message);
+                  this.$router.push("/form");
+                  this.switchbutton = false;
+                  return obj
+                  // 处理登录成功后的操作
+              } else {
+                console.error("登录失败", obj.message);
+                alert(obj.message);
+                this.switchbutton = false;
+                // return
+              }
+          })
+          .catch((error) => {
+              console.error("登录请求失败", error);
+          });;
+          
      },
 }
   }
