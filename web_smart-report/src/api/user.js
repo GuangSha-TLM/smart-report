@@ -13,7 +13,12 @@ import request from "@/utils/request";
 //     return request.post('/user/login', user)
 // }
 
-// 创建表单
+// 用户登录
 export const login = (data) => {
   return request.post("/user/login", data);
+};
+
+// 用户注册
+export const reg = (data) => {
+  return request.post("/user/userReg", data);
 };

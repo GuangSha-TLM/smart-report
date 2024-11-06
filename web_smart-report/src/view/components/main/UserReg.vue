@@ -59,6 +59,7 @@ import Foot from '../frame/Foot.vue';
 import Top from '../frame/LoginTop.vue';
 //引入api的接口文件
 import { userRegister } from "@/api/userinfo";
+import { reg } from "@/api/user";
 
 export default {
     name: 'Register',
@@ -94,9 +95,29 @@ export default {
         //     }
         // },
         submit() {
-            this.$axios.post('/api/user/userReg', this.userRegisterData).then(res => {
-                console.log(res);
-            })
+
+            reg(this.userRegisterData).then((obj) => {
+              if (obj && obj.code === "0x200") {
+                  console.log("注册成功");
+                  alert(obj.message);
+                  this.$router.push("/user/login");
+                  this.switchbutton = false;
+                  return obj
+                  // 处理登录成功后的操作
+              } else {
+                console.error("登录失败");
+                alert(obj.message);
+                this.switchbutton = false;
+                // return
+              }
+          })
+          .catch((error) => {
+              console.error("登录请求失败", error);
+          });;;
+
+            // this.$axios.post('/api/user/userReg', this.userRegisterData).then(res => {
+            //     console.log(res);
+            // })
         }
     }
 }
