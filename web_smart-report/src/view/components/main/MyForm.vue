@@ -4,7 +4,7 @@
     <!-- 操作栏 -->
     <el-row type="flex" justify="end" style="margin-bottom: 20px;">
       <el-col :span="3">
-        <!-- <el-button type="primary" @click="handleAdd">新增</el-button> -->
+        <el-button type="primary" @click="sendIsSure = true">发送</el-button>
       </el-col>
     </el-row>
 
@@ -27,11 +27,38 @@
 
     </el-table>
 
+    <!-- 发送表单的弹窗 -->
+    <el-dialog title="发送表单" :visible.sync="sendIsSure" width="30%" @close="resetFormName">
+        <el-form>
+            <el-form-item label="表单名称">
+                <el-select v-model="FormUpdateBo.name" placeholder="请选择表单名称">
+                    <el-option
+                        v-for="(item, index) in formNames"
+                        :key="index"
+                        :label="item.name"  
+                        :value="item.id" 
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="sendIsSure = false">取消</el-button>
+            <el-button type="primary" @click="submitUpdate">确定</el-button>
+        </div>
+    </el-dialog>
+    
     <!-- 导出表单的弹窗 -->
     <el-dialog title="请输入表单名称" :visible.sync="nameIsSure" width="30%" @close="resetFormName">
         <el-form>
             <el-form-item label="表单名称">
-                <el-input v-model="FormUpdateBo.name" placeholder="请输入表单名称"></el-input>
+                <el-select placeholder="请选择表单名称">
+                    <el-option
+                        v-for="(name, index) in formNames"
+                        :key="index"
+                        :label="name"
+                        :value="name"
+                    ></el-option>
+                </el-select>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -74,8 +101,10 @@ export default {
       totalItems: 0,   // 数据总数
       tableData: [],   // 表格数据
       nameIsSure: false, // 修改按钮
+      sendIsSure: false, // 发送按钮
       viewIsSure: false, // 预览按钮
       formId: '', // 表单id
+      formNames:{},
       // 预览时表单数据
       formData: {},
       // 表单配置项
@@ -84,6 +113,11 @@ export default {
       FormNewPageBo : {
         page: 1,
         limit: 10,
+        name: ''
+        },
+        FormNewPageBoNew: {
+        page: 1,
+        limit: 999999999,
         name: ''
       },
       FormUpdateBo:{
@@ -94,8 +128,14 @@ export default {
   },
   created() {
     this.fetchData(); // 组件创建时加载数据
+    this.formNamesData(); // 组件创建时加载数据
   },
     methods: {
+        async formNamesData() {
+            this.formNames = await formByPageLike(this.FormNewPageBoNew)
+                .then(obj => obj.data); // 获取数据
+            console.log('formNames', this.formNames);
+         },
     // 获取表单数据和配置
     async fetchFormData() {
       try {
