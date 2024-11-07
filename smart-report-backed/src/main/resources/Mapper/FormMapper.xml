@@ -29,6 +29,24 @@
         where id = #{id}
     </update>
 
+    <update id="formDelete">
+        update
+        form
+        set del_flag = 1
+        where id = #{id}
+        limit 1
+    </update>
+
+    <update id="formUpdate">
+        update
+        form
+        set
+            name = #{name}
+        where
+            id = #{id}
+        limit 1
+    </update>
+
     <select id="selectById" resultType="com.gsxy.core.pojo.Form">
         select id,user_id,config,del_flag from form_config where id = #{id}
     </select>
@@ -42,6 +60,38 @@
     <select id="selectAll" resultType="com.gsxy.core.pojo.Form">
         select id,user_id,config,del_flag from form_config
         limit #{index},#{pageSize}
+    </select>
+
+    <select id="formByPageLike" resultType="com.gsxy.core.pojo.FormNew">
+    select
+        *
+    from
+        form
+    <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%') and
+            </if>
+            user_id = #{userId}
+        and
+            del_flag = 0
+    </where>
+    limit
+        #{page},#{limit}
+    </select>
+
+    <select id="formByPageLikeCount" resultType="java.lang.Long">
+        select
+        count(*)
+        from
+        form
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%') and
+            </if>
+            user_id = #{userId}
+            and
+            del_flag = 0
+        </where>
     </select>
 
 

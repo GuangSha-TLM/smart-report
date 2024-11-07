@@ -17,3 +17,18 @@ import request from "@/utils/request";
 export const formCreate = (data) => {
   return request.post("/form/add", data);
 };
+
+// 创建表单
+export const formByPageLike = (data) => {
+  return request.post("/form/formByPageLike", data);
+};
+
+// 创建表单
+export const formDelete = (id) => {
+  return request.get(`/form/formDelete/${id}`);
+};
+
+// 创建表单
+export const formUpdate = (data) => {
+  return request.post('/form/formUpdate',data);
+};

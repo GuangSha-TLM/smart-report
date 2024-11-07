@@ -11,8 +11,8 @@
                                     <i class="el-icon-location"></i>
                                     <span>表单板块</span>
                                 </template>
-                                <el-menu-item index="/form">选项1</el-menu-item>
-                                <el-menu-item index="1-2">选项2</el-menu-item>
+                                <el-menu-item index="/form">创建表单</el-menu-item>
+                                <el-menu-item index="/myForm">我的表单</el-menu-item>
                             </el-submenu>
                             <el-menu-item index="/userinfo">
                                 <i class="el-icon-menu"></i>

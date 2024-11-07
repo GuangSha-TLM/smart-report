@@ -1,8 +1,6 @@
 package com.gsxy.core.service;
 
-import com.gsxy.core.pojo.bo.FormAddBo;
-import com.gsxy.core.pojo.bo.FormPageBo;
-import com.gsxy.core.pojo.bo.FormUpdateBo;
+import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.vo.ResponseVo;
 
 /**
@@ -58,4 +56,10 @@ public interface FormService {
      * @return
      */
     ResponseVo selectAll(FormPageBo formPageBo);
+
+    ResponseVo formByPageLike(FormNewPageBo formNewPageBo);
+
+    ResponseVo formDelete(Long id);
+
+    ResponseVo formUpdate(FormNewUpdateBo formNewUpdateBo);
 }

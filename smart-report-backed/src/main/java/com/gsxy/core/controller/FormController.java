@@ -2,9 +2,7 @@ package com.gsxy.core.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
-import com.gsxy.core.pojo.bo.FormAddBo;
-import com.gsxy.core.pojo.bo.FormPageBo;
-import com.gsxy.core.pojo.bo.FormUpdateBo;
+import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.vo.ResponseVo;
 import com.gsxy.core.service.FormService;
 import io.swagger.annotations.Api;
@@ -107,6 +105,39 @@ public class FormController {
         }
 
         return JSONArray.toJSONString(formService.update(formUpdateBo));
+    }
+
+    /**
+     * 表单分页查询
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("表单分页查询")
+    @PostMapping("/formByPageLike")
+    public String formByPageLike(@RequestBody FormNewPageBo formNewPageBo){
+        return JSONArray.toJSONString(formService.formByPageLike(formNewPageBo));
+    }
+
+    /**
+     * 表单删除
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("表单删除")
+    @GetMapping("/formDelete/{id}")
+    public String formDelete(@PathVariable Long id){
+        return JSONArray.toJSONString(formService.formDelete(id));
+    }
+
+    /**
+     * 表单修改
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("表单修改")
+    @PostMapping("/formUpdate")
+    public String formUpdate(@RequestBody FormNewUpdateBo formNewUpdateBo){
+        return JSONArray.toJSONString(formService.formUpdate(formNewUpdateBo));
     }
 
     /**

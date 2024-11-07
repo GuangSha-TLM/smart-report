@@ -2,6 +2,7 @@ package com.gsxy.core.mapper;
 
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
+import com.gsxy.core.pojo.bo.FormNewUpdateBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -65,4 +66,12 @@ public interface FormMapper {
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     void insertForm(FormNew formNew);
+
+    List<FormNew> formByPageLike(long page, Long limit, String name, Long userId);
+
+    Long formByPageLikeCount(String name, Long loginUserId, Long userId);
+
+    void formDelete(Long id);
+
+    void formUpdate(FormNewUpdateBo formNewUpdateBo);
 }

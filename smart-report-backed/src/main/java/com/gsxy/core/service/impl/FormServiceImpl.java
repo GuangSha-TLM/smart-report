@@ -3,10 +3,7 @@ package com.gsxy.core.service.impl;
 import com.gsxy.core.mapper.FormMapper;
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
-import com.gsxy.core.pojo.bo.FormAddBo;
-import com.gsxy.core.pojo.bo.FormPageBo;
-import com.gsxy.core.pojo.bo.FormPageSBo;
-import com.gsxy.core.pojo.bo.FormUpdateBo;
+import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.enums.MessageValues;
 import com.gsxy.core.pojo.vo.ResponseVo;
 import com.gsxy.core.service.FormService;
@@ -226,6 +223,52 @@ public class FormServiceImpl implements FormService {
                 .message(SUCCESS_MESSAGE)
                 .code(SUCCESS_CODE)
                 .data(list)
+                .build();
+    }
+
+    @Override
+    public ResponseVo formByPageLike(FormNewPageBo formNewPageBo) {
+
+        Long loginUserId = LoginUtils.getLoginUserId();
+        List<FormNew> formList = formMapper.formByPageLike((formNewPageBo.getPage() - 1) * formNewPageBo.getLimit(),
+                formNewPageBo.getLimit(),
+                formNewPageBo.getName(),
+                loginUserId
+                );
+
+        Long count = formMapper.formByPageLikeCount(
+                formNewPageBo.getName(),
+                LoginUtils.getLoginUserId(),
+                loginUserId
+        );
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .data(formList)
+                .count(count)
+                .build();
+    }
+
+    @Override
+    public ResponseVo formDelete(Long id) {
+
+        formMapper.formDelete(id);
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo formUpdate(FormNewUpdateBo formNewUpdateBo) {
+
+        formMapper.formUpdate(formNewUpdateBo);
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
                 .build();
     }
 }
