@@ -27,7 +27,7 @@ public class Form {
      * 组件
      */
     private String config;
-    private String option;
+    private String options;
 
     /**
      * 逻辑删除(0:存在  1:删除)

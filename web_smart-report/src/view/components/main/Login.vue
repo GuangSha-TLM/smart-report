@@ -81,6 +81,7 @@
               if (obj && obj.code === "0x200") {
                   console.log("登录成功", obj.data);
                   setCookie ("token",obj.data);
+                  setCookie ("role",obj.role);
                   alert(obj.message);
                   this.$router.push("/form");
                   this.switchbutton = false;

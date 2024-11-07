@@ -9,34 +9,26 @@
     </el-row>
 
     <!-- 表格展示数据 -->
-    <el-table :data="tableData" style="width: 100%" border>
+    <el-table :data="userDatas" style="width: 100%" border>
       <el-table-column label="ID">
             <template slot-scope="scope">{{ scope.$index + 1 }}</template>
       </el-table-column>
-      <el-table-column label="名称" prop="name"></el-table-column>
+      <el-table-column label="姓名" prop="reserveIdtEXT"></el-table-column>
+      <el-table-column label="是否填写" prop="isWrite">
+          <template v-slot:default="{ row }">
+            {{ row.write ? '填写' : '未填写' }}
+          </template>
+      </el-table-column>
       <!-- <el-table-column label="创建人" prop="createdText"></el-table-column> -->
 
       <!-- 操作栏（每行数据右侧的操作按钮） -->
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button @click="handleView(scope.row)" size="small" type="primary">填写</el-button>
+          <el-button @click="handleView(scope.row)" size="small" type="primary">详细</el-button>
         </template>
       </el-table-column>
 
     </el-table>
-
-    <!-- 导出表单的弹窗 -->
-    <el-dialog title="请输入表单名称" :visible.sync="nameIsSure" width="30%" @close="resetFormName">
-        <el-form>
-            <el-form-item label="表单名称">
-                <el-input v-model="FormUpdateBo.name" placeholder="请输入表单名称"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="nameIsSure = false">取消</el-button>
-            <el-button type="primary" @click="submitUpdate">确定</el-button>
-        </div>
-    </el-dialog>
 
     <!-- 预览 -->
     <el-dialog title="预览" :visible.sync="viewIsSure" width="30%">
@@ -62,7 +54,7 @@
 </template>
 
 <script>
-import { formByPageLike,formDelete,formUpdate,formQuery,viewForm } from "@/api/form";
+import { formByPageLike,formDelete,formUpdate,formQuery,viewFormUser,formQueryAll } from "@/api/form";
 import { addFormInfo } from "@/api/user";
 
 export default {
@@ -71,7 +63,7 @@ export default {
       currentPage: 1,  // 当前页数
       pageSize: 10,    // 每页显示多少条数据
       totalItems: 0,   // 数据总数
-      tableData: [],   // 表格数据
+      userDatas: [],   // 表格数据
       nameIsSure: false, // 修改按钮
       viewIsSure: false, // 预览按钮
       formId: '', // 表单id
@@ -82,7 +74,8 @@ export default {
       option: {},  // 表单其他选项配置
       FormNewPageBo : {
         page: 1,
-        limit: 10
+        limit: 10,
+        formId: this.$route.params.id
         },
         AddFormInfo: {
             formId: '',
@@ -95,15 +88,17 @@ export default {
     };
   },
   created() {
+      this.formId = this.$route.params.id;
+    console.log('formId', this.formId);
     this.fetchData(); // 组件创建时加载数据
   },
     methods: {
     // 获取表单数据和配置
     async fetchFormData() {
       try {
-        const response = await formQuery(this.formId);
-    console.log('config', response.data);
-
+        const response = await formQueryAll(this.formId);
+        //   response = JSON.parse(response)
+    console.log('config122121', response.data);
     if (response && response.code === "0x200") {
     try {
         // 假设返回的数据包含表单规则和表单值
@@ -111,8 +106,8 @@ export default {
         //         console.log('str', str);
         //     return JSON.parse(str);
         //     });  // 表单规则
-        this.rule = JSON.parse(response.data);
-            //   this.formData = response.data || [];  // 表单回显数据
+        this.rule = JSON.parse(response.data[0].config);
+              this.formData = JSON.parse(response.data[0].formData) || [];  // 表单回显数据
             //   this.option = response.data || {};  // 表单其他配置（例如布局等）
         } catch (error) {
             console.error("解析数据失败:", error);
@@ -124,10 +119,11 @@ export default {
         },
         async fetchData() {
         try {
-            const obj = await viewForm(this.FormNewPageBo); // 获取数据
+            const obj = await viewFormUser(this.FormNewPageBo); // 获取数据
+            console.log("成功", obj);
             if (obj && obj.code === "0x200") {
                 console.log("成功", obj.data);
-                this.tableData = obj.data; // 设置表格数据
+                this.userDatas = obj.data; // 设置表格数据
                 this.totalItems = obj.count; // 设置数据总数 (假设后端返回了 total 字段)
                 this.switchbutton = true; // 根据需要更新按钮状态
             } else {
@@ -201,8 +197,7 @@ export default {
         this.FormUpdateBo.id = '';
         console.log("表单已重置");
         },
-      handleView(row) {
-          this.formId = row.formId;
+      handleView() {
           this.viewIsSure = true;
           this.fetchFormData();
         },

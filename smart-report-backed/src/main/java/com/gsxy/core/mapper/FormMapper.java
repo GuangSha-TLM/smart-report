@@ -6,10 +6,14 @@ import com.gsxy.core.pojo.FormSendUser;
 import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.FormNewUpdateBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
+import com.gsxy.core.pojo.vo.FormSendUserVo;
+import com.gsxy.core.pojo.vo.FormUserDaraVo;
+import com.gsxy.core.pojo.vo.FormUserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -84,4 +88,23 @@ public interface FormMapper {
     void addFormInfo(FormUserData build);
 
     void sendForm(FormSendUser build);
+
+    List<FormSendUserVo> viewForm(Long userId, Long page, Long limit);
+
+    @Select("select * from form where id = #{formId} and del_flag = 0 limit 1")
+    FormNew queryForm(Long formId);
+
+    @Select("select * from form_config where form_id = #{formId} and del_flag = 0")
+    Form queryFormConfig(Long formId);
+
+
+    Long viewFormCount(Long userId);
+
+    List<FormUserVo> viewFormUser(Long formId, Long page, Long limit);
+
+    Long viewFormUserCount(Long formId);
+
+    List<FormUserDaraVo> formQueryAll(Long id, Long userId);
+
+    Long queryFormData(Long id,Long userId);
 }

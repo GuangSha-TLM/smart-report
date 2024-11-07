@@ -6,7 +6,7 @@
                     <el-col :span="23">
                         <h5>智能报表导航</h5>
                         <el-menu router="true" default-active="1" class="el-menu-vertical-demo">
-                            <el-submenu index="1">
+                            <el-submenu v-if="role == 2" index="1">
                                 <template slot="title">
                                     <i class="el-icon-location"></i>
                                     <span>表单板块</span>
@@ -38,8 +38,18 @@
 </template>
 
 <script>
+  import { getCookie } from "../../../static/ZuiBlog/ZuiBlog";
+
 export default {
-    name: 'App'
+    name: 'App',
+    data() {
+        return {
+            role: '',
+        }
+    },
+    created() {
+        this.role = getCookie("role");
+    },
 }
 </script>
 <style>

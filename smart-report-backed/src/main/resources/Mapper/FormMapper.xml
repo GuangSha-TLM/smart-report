@@ -110,5 +110,75 @@
         </where>
     </select>
 
+    <select id="viewForm" resultType="com.gsxy.core.pojo.vo.FormSendUserVo">
+        select
+            form_id
+        from
+            form_send_user
+        where
+            reserve_id = #{userId}
+        and
+            del_flag = 0
+        limit #{page},#{limit}
+    </select>
+
+    <select id="viewFormCount" resultType="java.lang.Long">
+        select
+            count(*)
+        from
+            form_send_user
+        where
+            reserve_id = #{userId}
+          and
+            del_flag = 0
+    </select>
+
+    <select id="viewFormUser" resultType="com.gsxy.core.pojo.vo.FormUserVo">
+        select
+            *
+        from
+            form_send_user
+        where
+            form_id = #{formId}
+          and
+            del_flag = 0
+        limit #{page},#{limit}
+    </select>
+    <select id="viewFormUserCount" resultType="java.lang.Long">
+        select
+            count(*)
+        from
+            form_send_user
+        where
+            form_id = #{formId}
+          and
+            del_flag = 0
+    </select>
+
+    <select id="formQueryAll" resultType="com.gsxy.core.pojo.vo.FormUserDaraVo">
+        select
+            fc.config,fd.form_data
+        from
+            form_config fc
+        inner join
+            form_user_data fd
+        on
+            fc.form_id = #{id}
+        and
+            fc.form_id = fd.form_id
+        limit 1
+    </select>
+
+    <select id="queryFormData" resultType="java.lang.Long">
+        select
+            count(*)
+        from
+            form_user_data
+        where
+            form_id = #{id}
+          and
+            created_by = #{userId}
+    </select>
+
 
 </mapper>

@@ -38,7 +38,22 @@ export const formQuery = (id) => {
   return request.get(`/form/formQuery/${id}`);
 };
 
+// 查询表单组件
+export const formQueryAll = (id) => {
+  return request.get(`/form/formQueryAll/${id}`);
+};
+
 // 发送表单 -》 用户
 export const sendFormUser = (data) => {
   return request.post("/form/sendForm", data);
+};
+
+// 发送表单 -》 用户
+export const viewForm = (data) => {
+  return request.post("/form/viewForm", data);
+};
+
+// 发送表单 -》 用户
+export const viewFormUser = (data) => {
+  return request.post("/form/viewFormUser", data);
 };

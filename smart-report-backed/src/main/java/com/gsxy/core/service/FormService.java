@@ -68,4 +68,10 @@ public interface FormService {
     ResponseVo addFormInfo(FormInfoBo formInfoBo);
 
     ResponseVo sendForm(SendFormBo sendFormBo);
+
+    ResponseVo viewForm(ViewFormBo viewFormBo);
+
+    ResponseVo viewFormUser(ViewFormUserBo viewFormUserBoi);
+
+    ResponseVo formQueryAll(Long id);
 }

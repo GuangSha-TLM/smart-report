@@ -22,6 +22,7 @@
           <el-button @click="handleView(scope.row)" size="small" type="primary">查看</el-button>
           <el-button @click="handleEdit(scope.row)" size="small" type="primary">修改</el-button>
           <el-button @click="handleDelete(scope.row)" size="small" type="danger" style="margin-left: 10px;">删除</el-button>
+          <el-button @click="handleDetail(scope.row)" size="small" type="primary">详情</el-button>
         </template>
       </el-table-column>
 
@@ -229,6 +230,10 @@ if (response && response.code === "0x200") {
       async handleEdit(row) { 
         this.FormUpdateBo.id = row.id;
          this.nameIsSure = true;
+        },
+        async handleDetail(row) {
+            // 路由跳转，假设 `row.id` 是你想传递的参数
+            this.$router.push({ name: 'formDetail', params: { id: row.id } });
       },
     async handleDelete(row){
 

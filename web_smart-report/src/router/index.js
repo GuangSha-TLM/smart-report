@@ -5,6 +5,7 @@ import Login from "@/view/components/main/Login";
 import UserReg from "@/view/components/main/UserReg";
 import MyForm from "@/view/components/main/MyForm";
 import MyReserve from "@/view/components/main/MyReserve";
+import FormDetail from "@/view/components/main/FormDetail";
 import Homeview from "@/view/Homeview";
 import Form from "@/view/components/main/Form";
 import Userinfo from "@/view/components/main/Userinfo";
@@ -25,6 +26,11 @@ export default new Router({
           path: "form",
           name: "form",
           component: Form,
+        },
+        {
+          path: "formDetail",
+          name: "formDetail",
+          component: FormDetail,
         },
         {
           path: "myForm",

@@ -18,7 +18,7 @@ public class User {
     //密码
     private String password;
     //权限
-    private Long role;
+    private Integer role;
     //创建时间
     private Date createdTime;
    // 修改人

@@ -1,12 +1,16 @@
 package com.gsxy.core.service.impl;
 
 import com.gsxy.core.mapper.FormMapper;
+import com.gsxy.core.mapper.UserMapper;
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
 import com.gsxy.core.pojo.FormSendUser;
 import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.enums.MessageValues;
+import com.gsxy.core.pojo.vo.FormSendUserVo;
+import com.gsxy.core.pojo.vo.FormUserDaraVo;
+import com.gsxy.core.pojo.vo.FormUserVo;
 import com.gsxy.core.pojo.vo.ResponseVo;
 import com.gsxy.core.service.FormService;
 import com.gsxy.core.util.JwtUtil;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.gsxy.core.pojo.enums.CodeValues.ERROR_CODE;
 import static com.gsxy.core.pojo.enums.CodeValues.SUCCESS_CODE;
@@ -33,9 +38,12 @@ public class FormServiceImpl implements FormService {
 
     @Autowired
     private FormMapper formMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 添加表单
+     *
      * @param formAddBo
      * @return
      */
@@ -54,15 +62,15 @@ public class FormServiceImpl implements FormService {
         formMapper.insertForm(formNew);
 
 //        formAddBo.getConfig().forEach(item -> {
-            formMapper.insert(
-                    Form.builder()
-                            .config(formAddBo.getConfig())
-                            .option(formAddBo.getOption())
-                            .userId(userId)
-                            .formId(formNew.getId())
-                            .delFlag(0)
-                            .build()
-            );
+        formMapper.insert(
+                Form.builder()
+                        .config(formAddBo.getConfig())
+                        .options(formAddBo.getOption())
+                        .userId(userId)
+                        .formId(formNew.getId())
+                        .delFlag(0)
+                        .build()
+        );
 //        });
 
         return ResponseVo.builder()
@@ -74,6 +82,7 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 根据id查询表单
+     *
      * @param id
      * @return
      */
@@ -82,7 +91,7 @@ public class FormServiceImpl implements FormService {
 
         Form form = formMapper.selectById(id);
 
-        if(form == null){
+        if (form == null) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -90,7 +99,7 @@ public class FormServiceImpl implements FormService {
                     .build();
         }
         //已被删除则不被查询
-        if(form.getDelFlag() == 1){
+        if (form.getDelFlag() == 1) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -107,15 +116,16 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
     @Override
     public ResponseVo delete(Long id) {
         //逻辑删除
-        Long aLong =  formMapper.deleteById(id);
+        Long aLong = formMapper.deleteById(id);
         //操作失败
-        if(aLong == null){
+        if (aLong == null) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -132,6 +142,7 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 修改表单
+     *
      * @param formUpdateBo
      * @return
      */
@@ -140,12 +151,12 @@ public class FormServiceImpl implements FormService {
 
         Long aLong = formMapper.update(
                 Form.builder()
-                .id(formUpdateBo.getId())
-                .config(formUpdateBo.getConfig())
-                .build()
+                        .id(formUpdateBo.getId())
+                        .config(formUpdateBo.getConfig())
+                        .build()
         );
 
-        if(aLong == null){
+        if (aLong == null) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -162,6 +173,7 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 表单分页查询
+     *
      * @param formPageBo
      * @return
      */
@@ -169,7 +181,7 @@ public class FormServiceImpl implements FormService {
     public ResponseVo page(@RequestBody FormPageBo formPageBo) {
 
         //起始索引计算 起始索引=(查询的页码 - 1) * 每页显示的记录数
-        int index = (formPageBo.getPage()-1)* formPageBo.getPageSize();
+        int index = (formPageBo.getPage() - 1) * formPageBo.getPageSize();
 
         List<Form> list = formMapper.page(
                 FormPageSBo.builder()
@@ -180,7 +192,7 @@ public class FormServiceImpl implements FormService {
 
         );
 
-        if(list == null && list.size() == 0){
+        if (list == null && list.size() == 0) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -197,6 +209,7 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 查询所有表单
+     *
      * @param formPageBo
      * @return
      */
@@ -204,7 +217,7 @@ public class FormServiceImpl implements FormService {
     public ResponseVo selectAll(FormPageBo formPageBo) {
 
         //起始索引计算 起始索引=(查询的页码 - 1) * 每页显示的记录数
-        int index = (formPageBo.getPage()-1)* formPageBo.getPageSize();
+        int index = (formPageBo.getPage() - 1) * formPageBo.getPageSize();
 
         List<Form> list = formMapper.selectAll(
                 FormPageSBo.builder()
@@ -215,7 +228,7 @@ public class FormServiceImpl implements FormService {
 
         );
 
-        if(list == null && list.size() == 0){
+        if (list == null && list.size() == 0) {
             return ResponseVo.builder()
                     .message(ERROR_MESSAGE)
                     .code(ERROR_CODE)
@@ -238,7 +251,7 @@ public class FormServiceImpl implements FormService {
                 formNewPageBo.getLimit(),
                 formNewPageBo.getName(),
                 loginUserId
-                );
+        );
 
         Long count = formMapper.formByPageLikeCount(
                 formNewPageBo.getName(),
@@ -313,7 +326,7 @@ public class FormServiceImpl implements FormService {
 
         Long userId = LoginUtils.getLoginUserId();
 
-        sendFormBo.getUserId().forEach(item->{
+        sendFormBo.getUserId().forEach(item -> {
             formMapper.sendForm(
                     FormSendUser.builder()
                             .reserveId(item)
@@ -325,6 +338,65 @@ public class FormServiceImpl implements FormService {
         });
 
         return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo viewForm(ViewFormBo viewFormBo) {
+
+        Long userId = LoginUtils.getLoginUserId();
+        viewFormBo.setPage((viewFormBo.getPage() - 1) * viewFormBo.getLimit());
+        List<FormSendUserVo> formSendUserList = formMapper.viewForm(userId, viewFormBo.getPage(), viewFormBo.getLimit())
+                .stream().map(item -> {
+                    item.setName(formMapper.queryForm(item.getFormId()).getName());
+                    Form form = formMapper.queryFormConfig(item.getFormId());
+                    item.setOption(form.getOptions());
+                    item.setConfig(form.getConfig());
+                    return item;
+                }).collect(Collectors.toList());
+
+        Long count = formMapper.viewFormCount(userId);
+
+        return ResponseVo.builder()
+                .data(formSendUserList)
+                .count(count)
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo viewFormUser(ViewFormUserBo viewFormUserBoi) {
+
+        Long userId = LoginUtils.getLoginUserId();
+        viewFormUserBoi.setPage((viewFormUserBoi.getPage() - 1) * viewFormUserBoi.getLimit());
+        List<FormUserVo> formSendUserList = formMapper.viewFormUser(viewFormUserBoi.getFormId(), viewFormUserBoi.getPage(), viewFormUserBoi.getLimit())
+                .stream().map(item -> {
+                    item.setReserveIdtEXT(userMapper.selectById(item.getReserveId()).getUsername());
+                    item.setWrite(formMapper.queryFormData(viewFormUserBoi.getFormId(), item.getReserveId()) > 0L ? true : false);
+                    return item;
+                }).collect(Collectors.toList());
+
+        Long count = formMapper.viewFormUserCount(viewFormUserBoi.getFormId());
+
+        return ResponseVo.builder()
+                .data(formSendUserList)
+                .count(count)
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo formQueryAll(Long id) {
+
+        Long userId = LoginUtils.getLoginUserId();
+        List<FormUserDaraVo> formSendUserList = formMapper.formQueryAll(id,userId);
+
+        return ResponseVo.builder()
+                .data(formSendUserList)
                 .message(SUCCESS_MESSAGE)
                 .code(SUCCESS_CODE)
                 .build();

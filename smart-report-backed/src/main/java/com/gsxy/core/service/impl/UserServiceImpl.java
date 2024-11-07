@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
             return ResponseVo.builder()
                     .code(CodeValues.SUCCESS_CODE)
                     .message(MessageValues.SUCCESS_MESSAGE)
+                    .role(user.getRole())
                     .data(jwt)
                     .build();
         }

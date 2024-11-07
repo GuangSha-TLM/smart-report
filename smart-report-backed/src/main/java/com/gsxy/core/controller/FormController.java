@@ -71,6 +71,28 @@ public class FormController {
     }
 
     /**
+     * 查看表单 -》 用户
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("查看表单 -》 用户")
+    @PostMapping("/viewForm")
+    public String viewForm(@RequestBody ViewFormBo viewFormBo){
+        return JSONArray.toJSONString(formService.viewForm(viewFormBo));
+    }
+
+    /**
+     * 查看该表单发给了哪些用户
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("查看表单 -》 用户")
+    @PostMapping("/viewFormUser")
+    public String viewFormUser(@RequestBody ViewFormUserBo viewFormUserBoi){
+        return JSONArray.toJSONString(formService.viewFormUser(viewFormUserBoi));
+    }
+
+    /**
      * 根据id查询表单
      * @author luyiinn 11/10/2024
      * @param id
@@ -171,6 +193,17 @@ public class FormController {
     @GetMapping("/formQuery/{id}")
     public String formQuery(@PathVariable Long id){
         return JSONArray.toJSONString(formService.formQuery(id));
+    }
+
+    /**
+     * 表单组件
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("表单组件")
+    @GetMapping("/formQueryAll/{id}")
+    public String formQueryAll(@PathVariable Long id){
+        return JSONArray.toJSONString(formService.formQueryAll(id));
     }
 
     /**
