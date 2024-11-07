@@ -25,6 +25,14 @@
         (#{formId},#{formData},#{createdBy})
     </insert>
 
+    <insert id="sendForm">
+        insert into
+        form_send_user
+        (form_id, reserve_id, created_by,created_time)
+        VALUES
+        (#{formId},#{reserveId},#{createdBy},#{createdTime})
+    </insert>
+
     <update id="deleteById">
         update form_config
         set del_flag = 1

@@ -31,7 +31,7 @@
     <el-dialog title="发送表单" :visible.sync="sendIsSure" width="30%" @close="resetFormName">
         <el-form>
             <el-form-item label="表单名称">
-                <el-select v-model="FormUpdateBo.name" placeholder="请选择表单名称">
+                <el-select v-model="SendFormBo.formId" placeholder="请选择表单名称">
                     <el-option
                         v-for="(item, index) in formNames"
                         :key="index"
@@ -41,9 +41,20 @@
                 </el-select>
             </el-form-item>
         </el-form>
+        <el-form>
+            <el-form-item label="选择用户">
+                <el-checkbox-group v-model="SendFormBo.userId">
+                    <el-checkbox
+                        v-for="(user, index) in userDatas"
+                        :key="user.id"
+                        :label="user.id"
+                    >{{ user.username }}</el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
+        </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="sendIsSure = false">取消</el-button>
-            <el-button type="primary" @click="submitUpdate">确定</el-button>
+            <el-button type="primary" @click="submitSend">确定</el-button>
         </div>
     </el-dialog>
     
@@ -60,7 +71,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-        </el-form>
+        </el-form>        
         <div slot="footer" class="dialog-footer">
             <el-button @click="nameIsSure = false">取消</el-button>
             <el-button type="primary" @click="submitUpdate">确定</el-button>
@@ -91,7 +102,8 @@
 </template>
 
 <script>
-import { formByPageLike,formDelete,formUpdate,formQuery } from "@/api/form";
+import { formByPageLike,formDelete,formUpdate,formQuery,sendFormUser } from "@/api/form";
+import { getUserDatas } from "@/api/user";
 
 export default {
   data() {
@@ -104,9 +116,11 @@ export default {
       sendIsSure: false, // 发送按钮
       viewIsSure: false, // 预览按钮
       formId: '', // 表单id
+       selectedUsers: [], //复选框 - 》 勾选中的用户id
       formNames:{},
       // 预览时表单数据
       formData: {},
+      userDatas: [], //用户数据
       // 表单配置项
       rule: [],  // 表单规则配置
       option: {},  // 表单其他选项配置
@@ -123,18 +137,48 @@ export default {
       FormUpdateBo:{
         name: '',
         id : ''
+      },      
+      SendFormBo:{
+        formId: '',
+        userId: []
       }
     };
   },
   created() {
     this.fetchData(); // 组件创建时加载数据
     this.formNamesData(); // 组件创建时加载数据
+    this.userData(); // 组件创建时加载数据
   },
     methods: {
         async formNamesData() {
             this.formNames = await formByPageLike(this.FormNewPageBoNew)
                 .then(obj => obj.data); // 获取数据
             console.log('formNames', this.formNames);
+        },
+        async submitSend() {
+            try {
+                const obj = await sendFormUser(this.SendFormBo); // 获取数据
+                if (obj && obj.code === "0x200") {
+                    console.log("成功", obj.data);
+                    this.tableData = obj.data; // 设置表格数据
+                    this.totalItems = obj.count; // 设置数据总数 (假设后端返回了 total 字段)
+                    this.switchbutton = true; // 根据需要更新按钮状态
+                    this.sendIsSure = false;
+                    alert(obj.message);
+                    this.fetchData();
+                } else {
+                    alert(obj.message);
+                    this.switchbutton = false;
+                }
+            } catch (error) {
+                console.error("请求失败", error);
+                this.switchbutton = false;
+            }
+        },
+        async userData() {
+            this.userDatas = await getUserDatas()
+                .then(obj => obj.data); // 获取数据
+            console.log('userDatas', this.userDatas);
          },
     // 获取表单数据和配置
     async fetchFormData() {

@@ -60,6 +60,17 @@ public class FormController {
     }
 
     /**
+     * 发送表单 -》 用户
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("发送表单 -》 用户")
+    @PostMapping("/sendForm")
+    public String sendForm(@RequestBody SendFormBo sendFormBo){
+        return JSONArray.toJSONString(formService.sendForm(sendFormBo));
+    }
+
+    /**
      * 根据id查询表单
      * @author luyiinn 11/10/2024
      * @param id

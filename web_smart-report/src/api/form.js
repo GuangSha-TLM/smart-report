@@ -30,10 +30,15 @@ export const formDelete = (id) => {
 
 // 创建表单
 export const formUpdate = (data) => {
-  return request.post('/form/formUpdate',data);
+  return request.post("/form/formUpdate", data);
 };
 
 // 查询表单组件
 export const formQuery = (id) => {
   return request.get(`/form/formQuery/${id}`);
+};
+
+// 发送表单 -》 用户
+export const sendFormUser = (data) => {
+  return request.post("/form/sendForm", data);
 };

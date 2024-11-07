@@ -66,4 +66,6 @@ public interface FormService {
     ResponseVo formQuery(Long id);
 
     ResponseVo addFormInfo(FormInfoBo formInfoBo);
+
+    ResponseVo sendForm(SendFormBo sendFormBo);
 }

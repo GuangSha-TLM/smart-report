@@ -3,6 +3,7 @@ package com.gsxy.core.service.impl;
 import com.gsxy.core.mapper.FormMapper;
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
+import com.gsxy.core.pojo.FormSendUser;
 import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.enums.MessageValues;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.gsxy.core.pojo.enums.CodeValues.ERROR_CODE;
@@ -299,6 +301,28 @@ public class FormServiceImpl implements FormService {
                         .formId(formInfoBo.getFormId())
                         .build()
         );
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo sendForm(SendFormBo sendFormBo) {
+
+        Long userId = LoginUtils.getLoginUserId();
+
+        sendFormBo.getUserId().forEach(item->{
+            formMapper.sendForm(
+                    FormSendUser.builder()
+                            .reserveId(item)
+                            .createdTime(new Date())
+                            .createdBy(userId)
+                            .formId(sendFormBo.getFormId())
+                            .build()
+            );
+        });
 
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)

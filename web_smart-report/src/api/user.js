@@ -27,3 +27,8 @@ export const reg = (data) => {
 export const addFormInfo = (data) => {
   return request.post("/form/addFormInfo", data);
 };
+
+// 填写表单信息
+export const getUserDatas = () => {
+  return request.get("/user/list");
+};

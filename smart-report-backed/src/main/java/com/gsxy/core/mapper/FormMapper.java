@@ -2,6 +2,7 @@ package com.gsxy.core.mapper;
 
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
+import com.gsxy.core.pojo.FormSendUser;
 import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.FormNewUpdateBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
@@ -81,4 +82,6 @@ public interface FormMapper {
     List<Object> formQuery(Long id);
 
     void addFormInfo(FormUserData build);
+
+    void sendForm(FormSendUser build);
 }
