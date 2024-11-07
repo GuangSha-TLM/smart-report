@@ -6,6 +6,7 @@ import com.gsxy.core.pojo.bo.FormNewUpdateBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -74,4 +75,7 @@ public interface FormMapper {
     void formDelete(Long id);
 
     void formUpdate(FormNewUpdateBo formNewUpdateBo);
+
+    @Select("select config from form_config where form_id = #{id}")
+    List<Object> formQuery(Long id);
 }

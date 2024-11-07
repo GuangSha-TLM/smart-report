@@ -5,8 +5,8 @@
 <mapper namespace="com.gsxy.core.mapper.FormMapper">
 
     <insert id="insert">
-        insert into form_config ( user_id, config, form_id , del_flag)
-        VALUES (#{userId},#{config}, #{formId} ,#{delFlag})
+        insert into form_config ( user_id, config, form_id ,options, del_flag)
+        VALUES (#{userId},#{config}, #{formId} ,#{option},#{delFlag})
     </insert>
 
     <insert id="insertForm" parameterType="com.gsxy.core.pojo.FormNew" useGeneratedKeys="true" keyProperty="id">

@@ -50,16 +50,17 @@ public class FormServiceImpl implements FormService {
 
         formMapper.insertForm(formNew);
 
-        formAddBo.getConfig().forEach(item -> {
+//        formAddBo.getConfig().forEach(item -> {
             formMapper.insert(
                     Form.builder()
-                            .config(item.toString())
+                            .config(formAddBo.getConfig())
+                            .option(formAddBo.getOption())
                             .userId(userId)
                             .formId(formNew.getId())
                             .delFlag(0)
                             .build()
             );
-        });
+//        });
 
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)
@@ -268,6 +269,18 @@ public class FormServiceImpl implements FormService {
 
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo formQuery(Long id) {
+
+        List<Object> list = formMapper.formQuery(id);
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
+                .data(list)
                 .code(SUCCESS_CODE)
                 .build();
     }

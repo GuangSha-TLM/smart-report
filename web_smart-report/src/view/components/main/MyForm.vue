@@ -39,6 +39,18 @@
             <el-button type="primary" @click="submitUpdate">确定</el-button>
         </div>
     </el-dialog>
+
+    <!-- 预览 -->
+    <el-dialog title="预览" :visible.sync="viewIsSure" width="30%">
+        <div>
+            <!-- 这里是回显表单数据的部分 -->
+            <form-create :rule="rule" :option="option" :value.sync="formData"></form-create>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="viewIsSure = false">取消</el-button>
+            <!-- <el-button type="primary">确定</el-button> -->
+        </div>
+    </el-dialog>
     
     <!-- 分页组件 -->
      <el-pagination
@@ -52,7 +64,7 @@
 </template>
 
 <script>
-import { formByPageLike,formDelete,formUpdate } from "@/api/form";
+import { formByPageLike,formDelete,formUpdate,formQuery } from "@/api/form";
 
 export default {
   data() {
@@ -62,6 +74,13 @@ export default {
       totalItems: 0,   // 数据总数
       tableData: [],   // 表格数据
       nameIsSure: false, // 修改按钮
+      viewIsSure: false, // 预览按钮
+      formId: '', // 表单id
+      // 预览时表单数据
+      formData: {},
+      // 表单配置项
+      rule: [],  // 表单规则配置
+      option: {},  // 表单其他选项配置
       FormNewPageBo : {
         page: 1,
         limit: 10,
@@ -76,7 +95,31 @@ export default {
   created() {
     this.fetchData(); // 组件创建时加载数据
   },
-  methods: {
+    methods: {
+    // 获取表单数据和配置
+    async fetchFormData() {
+      try {
+        const response = await formQuery(this.formId);
+console.log('config', response);
+
+if (response && response.code === "0x200") {
+  try {
+    // 假设返回的数据包含表单规则和表单值
+    //   this.rule = response.data.map(str => {
+    //         console.log('str', str);
+    //     return JSON.parse(str);
+      //     });  // 表单规则
+    this.rule = JSON.parse(response.data);
+        //   this.formData = response.data || [];  // 表单回显数据
+        //   this.option = response.data || {};  // 表单其他配置（例如布局等）
+    } catch (error) {
+        console.error("解析数据失败:", error);
+    }
+    }
+    } catch (error) {
+    console.error("请求失败", error);
+    }
+    },
         async fetchData() {
         try {
             const obj = await formByPageLike(this.FormNewPageBo); // 获取数据
@@ -148,6 +191,18 @@ export default {
             console.error("请求失败", error);
             this.switchbutton = false;
         }
+      },
+        // 添加 resetFormName 方法
+        resetFormName() {
+        // 重置表单相关数据，如果需要可以重置 FormUpdateBo 或其他表单状态
+        this.FormUpdateBo.name = '';
+        this.FormUpdateBo.id = '';
+        console.log("表单已重置");
+        },
+      handleView(row) {
+          this.formId = row.id;
+          this.viewIsSure = true;
+          this.fetchFormData();
       }
   },
 };

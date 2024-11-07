@@ -45,7 +45,8 @@ export default {
             value: {},
             FormAddBo: {
                 config: '',
-                formName: ''
+                formName: '',
+                option: ''
             },
             //组件的参数配置
             option: {
@@ -70,7 +71,8 @@ export default {
             this.hiddent = false
             this.rule = JSON.parse(this.$refs.designer.getJson()) //表单实现数据 -> 后端接口
             // console.log('rule',this.$refs.designer.getJson());
-            this.FormAddBo.config = this.rule;
+            this.FormAddBo.config = JSON.stringify(this.rule);
+            this.FormAddBo.option = JSON.stringify(this.option);
             const res = formCreate(this.FormAddBo);
             console.log('res = ', res);
             

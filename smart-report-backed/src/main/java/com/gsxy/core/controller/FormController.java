@@ -141,6 +141,17 @@ public class FormController {
     }
 
     /**
+     * 表单组件
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("表单组件")
+    @GetMapping("/formQuery/{id}")
+    public String formQuery(@PathVariable Long id){
+        return JSONArray.toJSONString(formService.formQuery(id));
+    }
+
+    /**
      * 表单分页查询
      * @author luyiinn 11/10/2024
      * @param formPageBo

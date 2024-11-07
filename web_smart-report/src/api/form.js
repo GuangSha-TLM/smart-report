@@ -32,3 +32,8 @@ export const formDelete = (id) => {
 export const formUpdate = (data) => {
   return request.post('/form/formUpdate',data);
 };
+
+// 查询表单组件
+export const formQuery = (id) => {
+  return request.get(`/form/formQuery/${id}`);
+};
