@@ -22,3 +22,8 @@ export const login = (data) => {
 export const reg = (data) => {
   return request.post("/user/userReg", data);
 };
+
+// 填写表单信息
+export const addFormInfo = (data) => {
+  return request.post("/form/addFormInfo", data);
+};

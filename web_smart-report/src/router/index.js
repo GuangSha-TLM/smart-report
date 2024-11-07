@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Login from "@/view/components/main/Login";
 import UserReg from "@/view/components/main/UserReg";
 import MyForm from "@/view/components/main/MyForm";
+import MyReserve from "@/view/components/main/MyReserve";
 import Homeview from "@/view/Homeview";
 import Form from "@/view/components/main/Form";
 import Userinfo from "@/view/components/main/Userinfo";
@@ -34,6 +35,11 @@ export default new Router({
           path: "userinfo",
           name: "userinfo",
           component: Userinfo,
+        },
+        {
+          path: "myReserve",
+          name: "myReserve",
+          component: MyReserve,
         },
       ],
     },

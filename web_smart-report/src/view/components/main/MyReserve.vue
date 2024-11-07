@@ -19,9 +19,7 @@
       <!-- 操作栏（每行数据右侧的操作按钮） -->
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button @click="handleView(scope.row)" size="small" type="primary">查看</el-button>
-          <el-button @click="handleEdit(scope.row)" size="small" type="primary">修改</el-button>
-          <el-button @click="handleDelete(scope.row)" size="small" type="danger" style="margin-left: 10px;">删除</el-button>
+          <el-button @click="handleView(scope.row)" size="small" type="primary">填写</el-button>
         </template>
       </el-table-column>
 
@@ -48,7 +46,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
             <el-button @click="viewIsSure = false">取消</el-button>
-            <!-- <el-button type="primary">确定</el-button> -->
+            <el-button type="primary" @click="submitInfo">确定</el-button>
         </div>
     </el-dialog>
     
@@ -65,6 +63,7 @@
 
 <script>
 import { formByPageLike,formDelete,formUpdate,formQuery } from "@/api/form";
+import { addFormInfo } from "@/api/user";
 
 export default {
   data() {
@@ -85,7 +84,11 @@ export default {
         page: 1,
         limit: 10,
         name: ''
-      },
+        },
+        AddFormInfo: {
+            formId: '',
+            formData: {}
+        },
       FormUpdateBo:{
         name: '',
         id : ''
@@ -100,26 +103,26 @@ export default {
     async fetchFormData() {
       try {
         const response = await formQuery(this.formId);
-console.log('config', response);
+    console.log('config', response);
 
-if (response && response.code === "0x200") {
-  try {
-    // 假设返回的数据包含表单规则和表单值
-    //   this.rule = response.data.map(str => {
-    //         console.log('str', str);
-    //     return JSON.parse(str);
-      //     });  // 表单规则
-    this.rule = JSON.parse(response.data);
-        //   this.formData = response.data || [];  // 表单回显数据
-        //   this.option = response.data || {};  // 表单其他配置（例如布局等）
-    } catch (error) {
-        console.error("解析数据失败:", error);
-    }
-    }
-    } catch (error) {
-    console.error("请求失败", error);
-    }
-    },
+    if (response && response.code === "0x200") {
+    try {
+        // 假设返回的数据包含表单规则和表单值
+        //   this.rule = response.data.map(str => {
+        //         console.log('str', str);
+        //     return JSON.parse(str);
+        //     });  // 表单规则
+        this.rule = JSON.parse(response.data);
+            //   this.formData = response.data || [];  // 表单回显数据
+            //   this.option = response.data || {};  // 表单其他配置（例如布局等）
+        } catch (error) {
+            console.error("解析数据失败:", error);
+        }
+        }
+        } catch (error) {
+        console.error("请求失败", error);
+        }
+        },
         async fetchData() {
         try {
             const obj = await formByPageLike(this.FormNewPageBo); // 获取数据
@@ -203,7 +206,27 @@ if (response && response.code === "0x200") {
           this.formId = row.id;
           this.viewIsSure = true;
           this.fetchFormData();
-      }
+        },
+        async submitInfo() { 
+            this.viewIsSure = false
+            this.AddFormInfo.formId = this.formId
+            this.AddFormInfo.formData = JSON.stringify(this.formData)
+            try {
+                const obj = await addFormInfo(this.AddFormInfo); // 获取数据
+                if (obj && obj.code === "0x200") {
+                    console.log("成功", obj.data);
+                    this.switchbutton = true; // 根据需要更新按钮状态
+                    this.fetchData();
+                } else {
+                    alert(obj.message);
+                    this.switchbutton = false;
+                }
+            } catch (error) {
+                console.error("请求失败", error);
+                this.switchbutton = false;
+            }
+            console.log("formData", this.formData);
+        }
   },
 };
 </script>

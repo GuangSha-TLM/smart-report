@@ -2,6 +2,7 @@ package com.gsxy.core.mapper;
 
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
+import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.FormNewUpdateBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
 import org.apache.ibatis.annotations.Mapper;
@@ -78,4 +79,6 @@ public interface FormMapper {
 
     @Select("select config from form_config where form_id = #{id}")
     List<Object> formQuery(Long id);
+
+    void addFormInfo(FormUserData build);
 }

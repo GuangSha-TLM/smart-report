@@ -3,6 +3,7 @@ package com.gsxy.core.service.impl;
 import com.gsxy.core.mapper.FormMapper;
 import com.gsxy.core.pojo.Form;
 import com.gsxy.core.pojo.FormNew;
+import com.gsxy.core.pojo.FormUserData;
 import com.gsxy.core.pojo.bo.*;
 import com.gsxy.core.pojo.enums.MessageValues;
 import com.gsxy.core.pojo.vo.ResponseVo;
@@ -281,6 +282,26 @@ public class FormServiceImpl implements FormService {
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)
                 .data(list)
+                .code(SUCCESS_CODE)
+                .build();
+    }
+
+    @Override
+    public ResponseVo addFormInfo(FormInfoBo formInfoBo) {
+
+        //获取当前登录用户id
+        Long userId = LoginUtils.getLoginUserId();
+
+        formMapper.addFormInfo(
+                FormUserData.builder()
+                        .createdBy(userId)
+                        .formData(formInfoBo.getFormData())
+                        .formId(formInfoBo.getFormId())
+                        .build()
+        );
+
+        return ResponseVo.builder()
+                .message(SUCCESS_MESSAGE)
                 .code(SUCCESS_CODE)
                 .build();
     }

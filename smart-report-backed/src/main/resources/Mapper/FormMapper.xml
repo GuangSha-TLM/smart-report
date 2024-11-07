@@ -17,6 +17,14 @@
             (#{userId},#{name})
     </insert>
 
+    <insert id="addFormInfo">
+        insert into
+        form_user_data
+        (form_id, form_data,created_by)
+        VALUES
+        (#{formId},#{formData},#{createdBy})
+    </insert>
+
     <update id="deleteById">
         update form_config
         set del_flag = 1

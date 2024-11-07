@@ -13,11 +13,19 @@
                                 </template>
                                 <el-menu-item index="/form">创建表单</el-menu-item>
                                 <el-menu-item index="/myForm">我的表单</el-menu-item>
+                            </el-submenu>                            
+                            <el-submenu index="2">
+                                <template slot="title">
+                                    <i class="el-icon-location"></i>
+                                    <span>用户板块</span>
+                                </template>
+                                <el-menu-item index="/userinfo">用户信息</el-menu-item>
+                                <el-menu-item index="/myReserve">消息</el-menu-item>
                             </el-submenu>
-                            <el-menu-item index="/userinfo">
+                            <!-- <el-menu-item index="/userinfo">
                                 <i class="el-icon-menu"></i>
                                 <span slot="title">用户板块</span>
-                            </el-menu-item>
+                            </el-menu-item> -->
                         </el-menu>
                     </el-col>
                 </el-row>

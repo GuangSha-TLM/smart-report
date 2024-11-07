@@ -49,6 +49,17 @@ public class FormController {
     }
 
     /**
+     * 添加表单信息
+     * @author hln 2024-11-7
+     * @return
+     */
+    @ApiOperation("添加表单信息")
+    @PostMapping("/addFormInfo")
+    public String addFormInfo(@RequestBody FormInfoBo formInfoBo){
+        return JSONArray.toJSONString(formService.addFormInfo(formInfoBo));
+    }
+
+    /**
      * 根据id查询表单
      * @author luyiinn 11/10/2024
      * @param id
