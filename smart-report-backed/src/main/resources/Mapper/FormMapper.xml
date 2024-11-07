@@ -5,34 +5,42 @@
 <mapper namespace="com.gsxy.core.mapper.FormMapper">
 
     <insert id="insert">
-        insert into form ( user_id, config, del_flag)
-        VALUES (#{userId},#{config},#{delFlag})
+        insert into form_config ( user_id, config, form_id , del_flag)
+        VALUES (#{userId},#{config}, #{formId} ,#{delFlag})
+    </insert>
+
+    <insert id="insertForm" parameterType="com.gsxy.core.pojo.FormNew" useGeneratedKeys="true" keyProperty="id">
+        insert into
+            form
+            (user_id, name)
+        VALUES
+            (#{userId},#{name})
     </insert>
 
     <update id="deleteById">
-        update form
+        update form_config
         set del_flag = 1
         where id = #{id}
     </update>
 
     <update id="update">
-        update form
+        update form_config
         set config = #{config}
         where id = #{id}
     </update>
 
     <select id="selectById" resultType="com.gsxy.core.pojo.Form">
-        select id,user_id,config,del_flag from form where id = #{id}
+        select id,user_id,config,del_flag from form_config where id = #{id}
     </select>
 
     <select id="page" resultType="com.gsxy.core.pojo.Form">
-        select id,user_id,config,del_flag from form
+        select id,user_id,config,del_flag from form_config
         where user_id = #{userId} and del_flag = 0
         limit #{index},#{pageSize}
     </select>
 
     <select id="selectAll" resultType="com.gsxy.core.pojo.Form">
-        select id,user_id,config,del_flag from form
+        select id,user_id,config,del_flag from form_config
         limit #{index},#{pageSize}
     </select>
 

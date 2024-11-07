@@ -1,8 +1,10 @@
 package com.gsxy.core.mapper;
 
 import com.gsxy.core.pojo.Form;
+import com.gsxy.core.pojo.FormNew;
 import com.gsxy.core.pojo.bo.FormPageSBo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -60,4 +62,7 @@ public interface FormMapper {
      * @return
      */
     List<Form> selectAll(FormPageSBo build);
+
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    void insertForm(FormNew formNew);
 }

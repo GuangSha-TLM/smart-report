@@ -2,6 +2,7 @@ package com.gsxy.core.service.impl;
 
 import com.gsxy.core.mapper.FormMapper;
 import com.gsxy.core.pojo.Form;
+import com.gsxy.core.pojo.FormNew;
 import com.gsxy.core.pojo.bo.FormAddBo;
 import com.gsxy.core.pojo.bo.FormPageBo;
 import com.gsxy.core.pojo.bo.FormPageSBo;
@@ -13,6 +14,7 @@ import com.gsxy.core.util.JwtUtil;
 import com.gsxy.core.util.LoginUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -38,27 +40,29 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
+    @Transactional
     public ResponseVo add(FormAddBo formAddBo) {
 
         //获取当前登录用户id
         Long userId = LoginUtils.getLoginUserId();
 
-
-        Form form = Form.builder()
-                .config(formAddBo.getConfig())
+        FormNew formNew = FormNew.builder()
+                .name(formAddBo.getFormName())
                 .userId(userId)
-                .delFlag(0)
                 .build();
 
-        Long aLong = formMapper.insert(form);
+        formMapper.insertForm(formNew);
 
-        if(aLong == null){
-            return ResponseVo.builder()
-                    .message(ERROR_MESSAGE)
-                    .code(ERROR_CODE)
-                    .data(null)
-                    .build();
-        }
+        formAddBo.getConfig().forEach(item -> {
+            formMapper.insert(
+                    Form.builder()
+                            .config(item.toString())
+                            .userId(userId)
+                            .formId(formNew.getId())
+                            .delFlag(0)
+                            .build()
+            );
+        });
 
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)

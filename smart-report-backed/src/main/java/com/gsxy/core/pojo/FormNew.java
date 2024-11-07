@@ -13,20 +13,19 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class Form {
+public class FormNew {
 
     private Long id;
 
     /**
      * 用户id
      */
-    private Long userId;
-    private Long formId;
+    private String name;
 
     /**
      * 组件
      */
-    private String config;
+    private Long userId;
 
     /**
      * 逻辑删除(0:存在  1:删除)

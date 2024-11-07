@@ -1,6 +1,10 @@
 package com.gsxy.core.pojo.bo;
 
 import lombok.*;
+import org.ehcache.xml.model.ConfigType;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author luyiinn
@@ -12,9 +16,9 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class FormAddBo {
+public class FormAddBo implements Serializable {
 
-    private String config;  //组件
-
+    private List<Object> config;  //组件
+    private String formName;  //表名
 
 }
