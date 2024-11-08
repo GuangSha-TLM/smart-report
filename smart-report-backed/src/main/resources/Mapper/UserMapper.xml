@@ -43,4 +43,10 @@
 
         limit #{page},#{pageSize}
     </select>
+    <select id="selectPageQueryCount" resultType="java.lang.Long">
+        select
+            count(*)
+        from
+            user
+    </select>
 </mapper>

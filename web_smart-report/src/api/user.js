@@ -32,3 +32,8 @@ export const addFormInfo = (data) => {
 export const getUserDatas = () => {
   return request.get("/user/list");
 };
+
+// 填写表单信息
+export const pageUserDatas = (data) => {
+  return request.post("/user/page", data);
+};

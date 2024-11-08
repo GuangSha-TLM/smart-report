@@ -169,11 +169,13 @@ public class UserServiceImpl implements UserService {
 
         System.out.println(userPageBo);
         List<UserVo> userVoList=userMapper.selectPageQuery(userPageBo);
+        Long count = userMapper.selectPageQueryCount(userPageBo);
 
 
         return ResponseVo.builder()
                 .message(MessageValues.SUCCESS_MESSAGE)
                 .data(userVoList)
+                .count(count)
                 .code(CodeValues.SUCCESS_CODE)
                 .build();
     }

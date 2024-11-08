@@ -32,4 +32,6 @@ public interface UserMapper {
     void Update(UserUpdateBo userUpdateBo);
 
     List<UserVo> selectPageQuery(UserPageBo userPageBo);
+
+    Long selectPageQueryCount(UserPageBo userPageBo);
 }

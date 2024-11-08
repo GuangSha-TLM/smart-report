@@ -141,7 +141,7 @@ public class UserController {
      * @param
      * @return
      */
-    @PostMapping("page")
+    @PostMapping("/page")
     @ApiOperation("用户信息分页查询")
     public String userSelectPage(@RequestBody UserPageBo userPageBo){
         if(userPageBo == null){
