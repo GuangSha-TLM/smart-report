@@ -6,7 +6,7 @@
 
     <insert id="insert">
         insert into form_config ( user_id, config, form_id ,options, del_flag)
-        VALUES (#{userId},#{config}, #{formId} ,#{option},#{delFlag})
+        VALUES (#{userId},#{config}, #{formId} ,#{options},#{delFlag})
     </insert>
 
     <insert id="insertForm" parameterType="com.gsxy.core.pojo.FormNew" useGeneratedKeys="true" keyProperty="id">
@@ -114,11 +114,17 @@
         select
             form_id
         from
-            form_send_user
-        where
-            reserve_id = #{userId}
+            form_send_user fsu
+        inner join
+            form f
+        on
+            fsu.reserve_id = #{userId}
         and
-            del_flag = 0
+            f.id = fsu.form_id
+        and
+            fsu.del_flag = 0
+        and
+            f.del_flag = 0
         limit #{page},#{limit}
     </select>
 
@@ -166,6 +172,8 @@
             fc.form_id = #{id}
         and
             fc.form_id = fd.form_id
+        order by
+            fd.id desc
         limit 1
     </select>
 
