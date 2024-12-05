@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
                         .password(userRegBo.getPassword())
                         .username(userRegBo.getUsername())
                         .createdTime(new Date())
+                        .schoolId(userRegBo.getSchoolId())
                         .build());
 
         return ResponseVo.builder()

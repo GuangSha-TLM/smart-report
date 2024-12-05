@@ -2,9 +2,12 @@
   <div>
 
     <!-- 操作栏 -->
-    <el-row type="flex" justify="end" style="margin-bottom: 20px;">
-      <el-col :span="3">
-        <el-button type="primary" @click="sendIsSure = true">发送</el-button>
+    <el-row type="flex" justify="end" style="margin-bottom: 20px; ">
+      <el-col :span="2"  >
+        <el-button type="primary" @click="sendIsSure = true" style="width: 100px;">发送</el-button>
+      </el-col>
+      <el-col :span="2" >
+        <el-button type="primary" @click="sendIsSureAll = true" >发送学院</el-button>
       </el-col>
     </el-row>
 
@@ -59,6 +62,40 @@
         </div>
     </el-dialog>
     
+
+    <!-- 发送学院表单的弹窗 -->
+    <el-dialog title="发送学院表单" :visible.sync="sendIsSureAll" width="30%" @close="resetFormName">
+        <el-form>
+            <el-form-item label="表单名称">
+                <el-select v-model="SendFormBo.formId" placeholder="请选择表单名称">
+                    <el-option
+                        v-for="(item, index) in formNames"
+                        :key="index"
+                        :label="item.name"  
+                        :value="item.id" 
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <el-form>
+            <el-form-item label="选择学院：">
+                <el-checkbox-group v-model="SendFormBo.schoolId">
+                    <el-checkbox label=1>信息学院</el-checkbox>
+                    <el-checkbox label=2>财经学院</el-checkbox>
+                    <el-checkbox label=3>艺术与传媒学院</el-checkbox>
+                    <el-checkbox label=4>通识教育学院</el-checkbox>
+                    <el-checkbox label=5>马克思主义学院</el-checkbox>
+                    <el-checkbox label=6>创新创业学院</el-checkbox>
+                </el-checkbox-group>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="sendIsSure = false">取消</el-button>
+            <el-button type="primary" @click="submitSend">确定</el-button>
+        </div>
+    </el-dialog>
+
+
     <!-- 导出表单的弹窗 -->
     <el-dialog title="请输入表单名称" :visible.sync="nameIsSure" width="30%" @close="resetFormName">
         <el-form>
@@ -115,13 +152,16 @@ export default {
       tableData: [],   // 表格数据
       nameIsSure: false, // 修改按钮
       sendIsSure: false, // 发送按钮
+      sendIsSureAll: false, // 学院发送按钮
       viewIsSure: false, // 预览按钮
       formId: '', // 表单id
        selectedUsers: [], //复选框 - 》 勾选中的用户id
+       selectedSchools: [], //复选框 - 》 勾选中的用户id
       formNames:{},
       // 预览时表单数据
       formData: {},
       userDatas: [], //用户数据
+      schoolDatas: [1,2,3], //学院数据
       // 表单配置项
       rule: [],  // 表单规则配置
       option: {},  // 表单其他选项配置
@@ -141,7 +181,8 @@ export default {
       },      
       SendFormBo:{
         formId: '',
-        userId: []
+        userId: [],
+        schoolId :[]
       }
     };
   },

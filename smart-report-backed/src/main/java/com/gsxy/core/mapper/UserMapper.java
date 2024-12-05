@@ -18,7 +18,8 @@ public interface UserMapper {
     @Select("select * from user where username=#{username}")
     User selectByUsername(String username);
 
-    @Insert("insert into user(username,password,created_time) values (#{username},#{password},#{createdTime})")
+    @Insert("insert into user(username,password,created_time,school_id) " +
+            "values (#{username},#{password},#{createdTime},#{schoolId})")
     void insert(User user);
 
     @Select("select * from user where id=#{id} and del_flag=0")
@@ -34,4 +35,8 @@ public interface UserMapper {
     List<UserVo> selectPageQuery(UserPageBo userPageBo);
 
     Long selectPageQueryCount(UserPageBo userPageBo);
+
+    List<Long> selectUserIdsBySchoolId(Integer schoolId);
+
+
 }

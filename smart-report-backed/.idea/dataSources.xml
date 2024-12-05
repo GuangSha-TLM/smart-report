@@ -28,7 +28,6 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="smart-report@192.168.0.211 [2]" uuid="ba4d1a0d-5a90-406f-800b-c799fc538087">
-      <driver-ref>mysql_aurora_aws</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>software.aws.rds.jdbc.mysql.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql:aws://192.168.0.211:3306/smart-report</jdbc-url>

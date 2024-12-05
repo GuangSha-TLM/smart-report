@@ -28,4 +28,7 @@ public class User {
     //逻辑删除
     private int delFlag;
 
+    //学院id
+    private  int schoolId;
+
 }

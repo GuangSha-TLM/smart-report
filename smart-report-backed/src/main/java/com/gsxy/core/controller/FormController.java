@@ -67,6 +67,7 @@ public class FormController {
     @ApiOperation("发送表单 -》 用户")
     @PostMapping("/sendForm")
     public String sendForm(@RequestBody SendFormBo sendFormBo){
+        System.out.println(sendFormBo);
         return JSONArray.toJSONString(formService.sendForm(sendFormBo));
     }
 

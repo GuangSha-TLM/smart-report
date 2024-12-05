@@ -33,6 +33,20 @@
                                     v-model="userRegisterData.password">
                             </div>
 
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">choose a college</label>
+                                <select name="请选择你的学院" id="exampleInputSchoolId"  class="form-control"  
+                                        v-model="userRegisterData.schoolId"  >
+                                           <option value=1>信息学院</option>
+                                           <option value=2>财经学院</option>
+                                           <option value=3>艺术与传媒学院</option>
+                                           <option value=3>通识教育学院</option>
+                                           <option value=3>马克思主义学院</option>
+                                           <option value=3>创新创业学院</option>
+                                 </select>
+                            </div>
+
+
                             <!-- <div class="form-group">
                                 <label for="exampleInputPassword1">Enter Password again</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"
@@ -71,6 +85,7 @@ export default {
             userRegisterData: {
                 username: "",
                 password: "",
+                schoolId: null
             },
         }
     },
@@ -95,7 +110,8 @@ export default {
         //     }
         // },
         submit() {
-
+            
+            this.userRegisterData.schoolId=parseInt( this.userRegisterData.schoolId)
             reg(this.userRegisterData).then((obj) => {
               if (obj && obj.code === "0x200") {
                   console.log("注册成功");

@@ -15,5 +15,6 @@ public class SendFormBo implements Serializable {
 
     private Long formId;
     private List<Long> userId;
+    private List<Integer> schoolId;
 
 }

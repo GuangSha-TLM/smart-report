@@ -326,17 +326,33 @@ public class FormServiceImpl implements FormService {
 
         Long userId = LoginUtils.getLoginUserId();
 
-        sendFormBo.getUserId().forEach(item -> {
-            formMapper.sendForm(
-                    FormSendUser.builder()
-                            .reserveId(item)
-                            .createdTime(new Date())
-                            .createdBy(userId)
-                            .formId(sendFormBo.getFormId())
-                            .build()
-            );
-        });
-
+        //判断有没有schoolId如果有，根据学院id查询学生
+        if (sendFormBo.getSchoolId().size()>0){
+            sendFormBo.getSchoolId().forEach(schoolId->{
+               List<Long> userIds = userMapper.selectUserIdsBySchoolId(schoolId);
+               userIds.forEach(uId->{
+                   formMapper.sendForm(
+                           FormSendUser.builder()
+                                   .reserveId(uId)
+                                   .createdTime(new Date())
+                                   .createdBy(userId)
+                                   .formId(sendFormBo.getFormId())
+                                   .build()
+                   );
+               });
+            });
+        }else {
+            sendFormBo.getUserId().forEach(item -> {
+                formMapper.sendForm(
+                        FormSendUser.builder()
+                                .reserveId(item)
+                                .createdTime(new Date())
+                                .createdBy(userId)
+                                .formId(sendFormBo.getFormId())
+                                .build()
+                );
+            });
+        }
         return ResponseVo.builder()
                 .message(SUCCESS_MESSAGE)
                 .code(SUCCESS_CODE)
